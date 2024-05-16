@@ -1,6 +1,10 @@
 package br.org.serratec.biblioteca.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -8,6 +12,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name="TB_USUARIO")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "usuarioID",
+        scope = UsuarioEntity.class
+)
 public class UsuarioEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -19,21 +28,14 @@ public class UsuarioEntity implements Serializable {
     @Column(name="usuarioNome")
     private String usuarioNome;
     @Column(name="usuarioEmail", unique=true)
+    @Pattern(regexp= "^[\\w\\.-]+@[a-zA-Z\\d\\.-]+\\.[a-zA-Z]{2,}$\n")
     private String usuarioEmail;
     @Column(name="usuarioSenha")
     private String usuarioSenha;
 
-    @OneToOne
-    @JoinColumn(name="perfilId")
-    private PerfilEntity perfilId;
-
-    public UsuarioEntity(UUID usuarioID, String usuarioNome, String usuarioEmail, String usuarioSenha, PerfilEntity perfilId) {
-        this.usuarioID = usuarioID;
-        this.usuarioNome = usuarioNome;
-        this.usuarioEmail = usuarioEmail;
-        this.usuarioSenha = usuarioSenha;
-        this.perfilId = perfilId;
-    }
+    @ManyToOne
+    @JoinColumn(name="perfil", referencedColumnName = "perfilId")
+    private PerfilEntity perfil;
 
     public UUID getUsuarioID() {
         return usuarioID;
@@ -67,11 +69,11 @@ public class UsuarioEntity implements Serializable {
         this.usuarioSenha = usuarioSenha;
     }
 
-    public PerfilEntity getPerfilId() {
-        return perfilId;
+    public PerfilEntity getPerfil() {
+        return perfil;
     }
 
-    public void setPerfilId(PerfilEntity perfilId) {
-        this.perfilId = perfilId;
+    public void setPerfil(PerfilEntity perfil) {
+        this.perfil = perfil;
     }
 }

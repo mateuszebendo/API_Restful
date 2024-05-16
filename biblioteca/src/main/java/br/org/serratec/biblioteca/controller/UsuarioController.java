@@ -2,6 +2,7 @@ package br.org.serratec.biblioteca.controller;
 
 import br.org.serratec.biblioteca.entity.UsuarioEntity;
 import br.org.serratec.biblioteca.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UsuarioController {
     UsuarioService UsuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioEntity> saveUsuario (@RequestBody UsuarioEntity Usuario) {
+    public ResponseEntity<UsuarioEntity> saveUsuario (@RequestBody @Valid UsuarioEntity Usuario) {
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioService.createUsuario(Usuario));
     }
 
@@ -28,8 +29,19 @@ public class UsuarioController {
     }
 
     @GetMapping ("/{id}")
-    public ResponseEntity<UsuarioEntity> getUsuarioById (@PathVariable UUID id){
-        return ResponseEntity.status(HttpStatus.OK).body(UsuarioService.getUsuarioById(id));
+    public ResponseEntity<Object> getUsuarioById (@PathVariable UUID id){
+//        try {
+            return ResponseEntity.status(HttpStatus.OK).body(UsuarioService.getUsuarioById(id));
+//        }
+//        catch (NullPointerException notFound) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("EXCEPTION GUGU: " + notFound.getMessage());
+//        }
+//        catch (NumberFormatException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{ 'EXCEPTION BONAFÉ': " + e.getMessage() + "}");
+//        }
+//        catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{ 'EXCEPTION GUGU': " + e + "}");
+//        }
     }
 
     @PutMapping

@@ -20,15 +20,15 @@ public class UsuarioService {
     }
 
     public UsuarioEntity getUsuarioById(UUID id){
-        return usuarioRepository.findById(id).orElse(null);
+//        return usuarioRepository.findById(id).orElse(null);
+        return usuarioRepository.findById(id).get();
     }
 
     public List<UsuarioEntity> getAllUsuario (){
         return usuarioRepository.findAll();
     }
 
-    public UsuarioEntity modifyUsuario (UsuarioEntity Usuario){
-        return usuarioRepository.save(Usuario);
+    public UsuarioEntity modifyUsuario (UsuarioEntity Usuario){ return usuarioRepository.save(Usuario);
     }
 
     public UsuarioEntity deleteUsuario(UUID id) {
