@@ -1,6 +1,7 @@
 package br.org.serratec.biblioteca.controller;
 
 import br.org.serratec.biblioteca.entity.UsuarioEntity;
+import br.org.serratec.biblioteca.service.ClientRestService;
 import br.org.serratec.biblioteca.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import java.util.UUID;
 public class UsuarioController {
     @Autowired
     UsuarioService UsuarioService;
+
+    @Autowired
+    ClientRestService clientRestService;
 
     @PostMapping
     public ResponseEntity<UsuarioEntity> saveUsuario (@RequestBody @Valid UsuarioEntity Usuario) {
@@ -42,6 +46,11 @@ public class UsuarioController {
 //        catch (Exception e) {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{ 'EXCEPTION GUGU': " + e + "}");
 //        }
+    }
+
+    @GetMapping ("/fake-store/{id}")
+    public ResponseEntity<Object> getUsuarioByIdFromFakeApi (@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(clientRestService.findUserByIdFromFakeApi(id));
     }
 
     @PutMapping

@@ -28,7 +28,7 @@ public class UsuarioEntity implements Serializable {
     @Column(name="usuarioNome")
     private String usuarioNome;
     @Column(name="usuarioEmail", unique=true)
-    @Pattern(regexp="^[a-zA-Z0-9+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")    private String usuarioEmail;
+    @Pattern(regexp="^[a-zA-Z0-9+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$", message = "Email não formatado corretamente")    private String usuarioEmail;
     @Column(name="usuarioSenha")
     private String usuarioSenha;
 
